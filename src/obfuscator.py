@@ -20,7 +20,7 @@ class Obfuscator:
         self.select_file_button = customtkinter.CTkButton(master=self.frame, text="Select File",
                                                           command=self.on_select_file_button_submit)
         self.obfuscate_button = customtkinter.CTkButton(master=self.frame, text="Obfuscate",
-                                                        command=self.on_obfuscate_button_submit)
+                                                        command=self.on_obfuscate_button_submit, state="disabled")
 
         self.construct_main_window()
 
@@ -36,9 +36,11 @@ class Obfuscator:
 
         if self.filepath == "":
             self.file_path_label.configure(text="Select the file you wanna obfuscate")
+            self.obfuscate_button.configure(state="disabled")
             return
 
         self.file_path_label.configure(text=f"Selected file: {self.filepath}")
+        self.obfuscate_button.configure(state="normal")
 
     def construct_main_window(self):
         self.file_path_label.pack(pady=(200, 10))
@@ -59,9 +61,6 @@ class Obfuscator:
         self.filepath = filepath
 
     def on_obfuscate_button_submit(self):
-        if self.filepath == "":
-            tkinter.messagebox.showerror("Python Obfuscator", "No file selected.")
-            return
 
         directory = os.path.dirname(self.filepath)
         name = os.path.basename(self.filepath)
